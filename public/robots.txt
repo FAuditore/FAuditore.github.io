@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://fauditore.github.io/sitemap.xml

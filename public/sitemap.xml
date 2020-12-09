@@ -1,0 +1,45 @@
+<?xml-stylesheet type="text/xsl" href="https://fauditore.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://fauditore.github.io/tags/golang/</loc>
+    <lastmod>2020-08-30T11:35:26+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://fauditore.github.io/</loc>
+    <lastmod>2020-08-30T11:35:26+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://fauditore.github.io/post/</loc>
+    <lastmod>2020-08-30T11:35:26+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://fauditore.github.io/tags/</loc>
+    <lastmod>2020-08-30T11:35:26+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://fauditore.github.io/post/%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81-%E4%BD%8D%E8%BF%90%E7%AE%97/</loc>
+    <lastmod>2020-08-30T11:35:26+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://fauditore.github.io/categories/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+</urlset>
