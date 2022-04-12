@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Liubo</title>
+    <link>https://fauditore.github.io/</link>
+    <description>Recent content on Liubo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 30 Aug 2020 11:35:26 +0000</lastBuildDate>
+    
+	<atom:link href="https://fauditore.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>二进制编码与位运算</title>
+      <link>https://fauditore.github.io/post/%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81-%E4%BD%8D%E8%BF%90%E7%AE%97/</link>
+      <pubDate>Sun, 30 Aug 2020 11:35:26 +0000</pubDate>
+      
+      <guid>https://fauditore.github.io/post/%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81-%E4%BD%8D%E8%BF%90%E7%AE%97/</guid>
+      <description>&lt;h2 id=&#34;二进制编码&#34;&gt;二进制编码&lt;/h2&gt;
+&lt;h3 id=&#34;二进制表示数&#34;&gt;&lt;strong&gt;二进制表示数&lt;/strong&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首位0 -&amp;gt; 正数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;首位1 -&amp;gt; 负数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;正数的源码 = 反码 = 补码&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;负数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;反码：源码符号位不变，其余位置取反&lt;/li&gt;
+&lt;li&gt;补码：反码+1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;位运算&#34;&gt;位运算&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;👴位运算都使用补码运算👴&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;👴输出的结果再转回源码👴&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;运算&lt;/th&gt;
+&lt;th&gt;符号&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;规则&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;按位与&lt;/td&gt;
+&lt;td&gt;&amp;amp;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;对应二进制位都为1则为1,否则为0	-&amp;gt;	有一个0则为0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;按位或&lt;/td&gt;
+&lt;td&gt;|&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;对应二进制位都为0则为0,否则为1 	-&amp;gt;	有一个1则为1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;异或&lt;/td&gt;
+&lt;td&gt;^&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;一元 ^a	按位取反 &lt;br&gt;二元a^b	对应二进制位不同为1,相同为0	-&amp;gt;	不进位加法&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;位清空&lt;/td&gt;
+&lt;td&gt;&amp;amp;^&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;a&amp;amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&amp;gt;	a&amp;amp;(^b)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;右移&lt;/td&gt;
+&lt;td&gt;&amp;raquo;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;a&amp;raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&amp;gt; 等价于a/(2^b)取下限 &lt;br&gt;负数不够除取-1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;左移&lt;/td&gt;
+&lt;td&gt;&amp;laquo;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;a&amp;laquo;b	a左移b位,符号位不变,低位补0 -&amp;gt; 等价于a*(2^b)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

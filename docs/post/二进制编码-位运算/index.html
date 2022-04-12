@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>二进制编码与位运算 - Liubo</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="刘波" /><meta name="description" content="二进制编码 二进制表示数   首位0 -&amp;gt; 正数
+  首位1 -&amp;gt; 负数
+  正数的源码 = 反码 = 补码
+  负数
+ 反码：源码符号位不变，其余位置取反 补码：反码&#43;1     位运算  👴位运算都使用补码运算👴 👴输出的结果再转回源码👴     运算 符号 规则     按位与 &amp;amp; 对应二进制位都为1则为1,否则为0	-&amp;gt;	有一个0则为0   按位或 | 对应二进制位都为0则为0,否则为1 -&amp;gt;	有一个1则为1   异或 ^ 一元 ^a	按位取反 二元a^b	对应二进制位不同为1,相同为0	-&amp;gt;	不进位加法   位清空 &amp;amp;^ a&amp;amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&amp;gt;	a&amp;amp;(^b)   右移 &amp;raquo; a&amp;raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&amp;gt; 等价于a/(2^b)取下限 负数不够除取-1   左移 &amp;laquo; a&amp;laquo;b	a左移b位,符号位不变,低位补0 -&amp;gt; 等价于a*(2^b)   " />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="https://fauditore.github.io/post/%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81-%E4%BD%8D%E8%BF%90%E7%AE%97/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.c3307c70cc3e24910744b08bd21159e8ed60e3da8e6593204b0be6cc43ced216.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="二进制编码与位运算" />
+<meta property="og:description" content="二进制编码
+二进制表示数
+
+
+首位0 -&gt; 正数
+
+
+首位1 -&gt; 负数
+
+
+正数的源码 = 反码 = 补码
+
+
+负数
+
+反码：源码符号位不变，其余位置取反
+补码：反码&#43;1
+
+
+
+
+位运算
+
+👴位运算都使用补码运算👴
+👴输出的结果再转回源码👴
+
+
+
+
+运算
+符号
+规则
+
+
+
+
+按位与
+&amp;
+对应二进制位都为1则为1,否则为0	-&gt;	有一个0则为0
+
+
+按位或
+|
+对应二进制位都为0则为0,否则为1 	-&gt;	有一个1则为1
+
+
+异或
+^
+一元 ^a	按位取反 二元a^b	对应二进制位不同为1,相同为0	-&gt;	不进位加法
+
+
+位清空
+&amp;^
+a&amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&gt;	a&amp;(^b)
+
+
+右移
+&raquo;
+a&raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&gt; 等价于a/(2^b)取下限 负数不够除取-1
+
+
+左移
+&laquo;
+a&laquo;b	a左移b位,符号位不变,低位补0 -&gt; 等价于a*(2^b)
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://fauditore.github.io/post/%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81-%E4%BD%8D%E8%BF%90%E7%AE%97/" />
+<meta property="article:published_time" content="2020-08-30T11:35:26+00:00" />
+<meta property="article:modified_time" content="2020-08-30T11:35:26+00:00" />
+<meta itemprop="name" content="二进制编码与位运算">
+<meta itemprop="description" content="二进制编码
+二进制表示数
+
+
+首位0 -&gt; 正数
+
+
+首位1 -&gt; 负数
+
+
+正数的源码 = 反码 = 补码
+
+
+负数
+
+反码：源码符号位不变，其余位置取反
+补码：反码&#43;1
+
+
+
+
+位运算
+
+👴位运算都使用补码运算👴
+👴输出的结果再转回源码👴
+
+
+
+
+运算
+符号
+规则
+
+
+
+
+按位与
+&amp;
+对应二进制位都为1则为1,否则为0	-&gt;	有一个0则为0
+
+
+按位或
+|
+对应二进制位都为0则为0,否则为1 	-&gt;	有一个1则为1
+
+
+异或
+^
+一元 ^a	按位取反 二元a^b	对应二进制位不同为1,相同为0	-&gt;	不进位加法
+
+
+位清空
+&amp;^
+a&amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&gt;	a&amp;(^b)
+
+
+右移
+&raquo;
+a&raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&gt; 等价于a/(2^b)取下限 负数不够除取-1
+
+
+左移
+&laquo;
+a&laquo;b	a左移b位,符号位不变,低位补0 -&gt; 等价于a*(2^b)
+
+
+">
+<meta itemprop="datePublished" content="2020-08-30T11:35:26+00:00" />
+<meta itemprop="dateModified" content="2020-08-30T11:35:26+00:00" />
+<meta itemprop="wordCount" content="747">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="二进制编码与位运算"/>
+<meta name="twitter:description" content="二进制编码
+二进制表示数
+
+
+首位0 -&gt; 正数
+
+
+首位1 -&gt; 负数
+
+
+正数的源码 = 反码 = 补码
+
+
+负数
+
+反码：源码符号位不变，其余位置取反
+补码：反码&#43;1
+
+
+
+
+位运算
+
+👴位运算都使用补码运算👴
+👴输出的结果再转回源码👴
+
+
+
+
+运算
+符号
+规则
+
+
+
+
+按位与
+&amp;
+对应二进制位都为1则为1,否则为0	-&gt;	有一个0则为0
+
+
+按位或
+|
+对应二进制位都为0则为0,否则为1 	-&gt;	有一个1则为1
+
+
+异或
+^
+一元 ^a	按位取反 二元a^b	对应二进制位不同为1,相同为0	-&gt;	不进位加法
+
+
+位清空
+&amp;^
+a&amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&gt;	a&amp;(^b)
+
+
+右移
+&raquo;
+a&raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&gt; 等价于a/(2^b)取下限 负数不够除取-1
+
+
+左移
+&laquo;
+a&laquo;b	a左移b位,符号位不变,低位补0 -&gt; 等价于a*(2^b)
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Liubo</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Liubo</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">二进制编码与位运算</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-30 </span>
+        
+          <span class="more-meta"> 747 words </span>
+          <span class="more-meta"> 2 mins read </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> times read </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Contents</h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#二进制编码">二进制编码</a>
+          <ul>
+            <li><a href="#二进制表示数"><strong>二进制表示数</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#位运算">位运算</a>
+          <ul>
+            <li><a href="#为什么用补码">为什么用补码</a></li>
+            <li><a href="#补码的本质">补码的本质</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="二进制编码">二进制编码</h2>
+<h3 id="二进制表示数"><strong>二进制表示数</strong></h3>
+<ul>
+<li>
+<p>首位0 -&gt; 正数</p>
+</li>
+<li>
+<p>首位1 -&gt; 负数</p>
+</li>
+<li>
+<p>正数的源码 = 反码 = 补码</p>
+</li>
+<li>
+<p>负数</p>
+<ul>
+<li>反码：源码符号位不变，其余位置取反</li>
+<li>补码：反码+1</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="位运算">位运算</h2>
+<ul>
+<li><strong>👴位运算都使用补码运算👴</strong></li>
+<li><strong>👴输出的结果再转回源码👴</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>运算</th>
+<th>符号</th>
+<th align="center">规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>按位与</td>
+<td>&amp;</td>
+<td align="center">对应二进制位都为1则为1,否则为0	-&gt;	有一个0则为0</td>
+</tr>
+<tr>
+<td>按位或</td>
+<td>|</td>
+<td align="center">对应二进制位都为0则为0,否则为1 	-&gt;	有一个1则为1</td>
+</tr>
+<tr>
+<td>异或</td>
+<td>^</td>
+<td align="center">一元 ^a	按位取反 <br>二元a^b	对应二进制位不同为1,相同为0	-&gt;	不进位加法</td>
+</tr>
+<tr>
+<td>位清空</td>
+<td>&amp;^</td>
+<td align="center">a&amp;^b	对于b的每个二进制位,如果为0,则取a对应位;如果为1,则取0	-&gt;	a&amp;(^b)</td>
+</tr>
+<tr>
+<td>右移</td>
+<td>&raquo;</td>
+<td align="center">a&raquo;b	a右移b位,符号位不变,低位溢出,高位用符号位补齐 -&gt; 等价于a/(2^b)取下限 <br>负数不够除取-1</td>
+</tr>
+<tr>
+<td>左移</td>
+<td>&laquo;</td>
+<td align="center">a&laquo;b	a左移b位,符号位不变,低位补0 -&gt; 等价于a*(2^b)</td>
+</tr>
+</tbody>
+</table>
+<p>Eg.假设字长为8位</p>
+<p><strong>10&amp;-3</strong>	0000 1010&amp;1111 1101 -&gt; 0000 1000 -&gt; 8</p>
+<p><strong>10|-3</strong>	0000 1010|1111 1101 -&gt; 1111 1111 -&gt; -1</p>
+<p><strong>10^-3</strong>	0000 1010^1111 1101 -&gt; 11110111 -&gt; -9</p>
+<p><strong>10&amp;^-3</strong>	0000 1010&amp;^1111 1101 -&gt; 0000 0010 -&gt; 2</p>
+<p><strong>1&raquo;2</strong>	0000 0001&raquo;2 -&gt; 0000 0000 -&gt; 0</p>
+<p><strong>-5&raquo;3</strong>	1111 1011&raquo;2 -&gt;1111 1111  -&gt; -1</p>
+<p><strong>-8&laquo;2</strong>	1111 1000&laquo;2 -&gt; 1110 0000 -&gt; -32</p>
+<hr>
+<h3 id="为什么用补码">为什么用补码</h3>
+<p>源码就是最高位为符号位，其他位表示该数的绝对值</p>
+<p>正数可以直接加，有负数参与运算时就不能直接加了</p>
+<p><strong>10+2</strong> 0000 1010 + 0000 0010 =0000 1100 12</p>
+<p><strong>10+-2</strong> 0000 1010 + 1000 0010 =1000 1100 -12 🙅‍♀️</p>
+<p>所以使用源码运算需要额外的减法器</p>
+<p>而且还有正负0的问题</p>
+<p>使用补码之后</p>
+<p><strong>10+-2</strong> 0000 1010 + 11111110 = 1 0000 1000 首位因为字长限制 结果保留8位 转成源码之后 即8</p>
+<h3 id="补码的本质">补码的本质</h3>
+<p>把-2替换成0-2</p>
+<p>　００００００００</p>
+<p>－００００００１０</p>
+<p>－－－－－－－－－－</p>
+<p>不够减 向上借位  0 可以 转化成 1111 1111 + 1</p>
+<p>　１１１１１１１１</p>
+<p>－００００００１０</p>
+<p>－－－－－－－－－ ⬇️</p>
+<p>　１１１１１１０１</p>
+<p>＋０００００００１</p>
+<p>－－－－－－－－－ ⬇️</p>
+<p>　１１１１１１１０</p>
+<p>　1111 1110就是-2的补码</p>
+<p>所以取反加一的意思就是表示用0减去这个数</p>
+<p>因为是有溢出的运算（模运算）
+1111 1110 + 0000 0010 = 0
+所以可以只用加法来进行计算
+　</p>
+<p>也就不难理解</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">a</span> <span class="kt">int8</span> <span class="p">=</span> <span class="o">-</span><span class="mi">128</span>
+<span class="cm">/*
+</span><span class="cm">	golang中int后面的数字代表bit 
+</span><span class="cm">*/</span>
+<span class="nx">a</span><span class="o">--</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//127
+</span><span class="c1"></span><span class="nx">a</span><span class="o">++</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//-128
+</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">刘波</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-08-30
+        
+    </span>
+  </p>
+  
+  
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      var gitalk = new Gitalk({
+        id: '2020-08-30 11:35:26 \u002b0000 UTC',
+        title: '二进制编码与位运算',
+        clientID: '3f9c9ab559946844f560',
+        clientSecret: 'f15b6b7c7b5d0814eb8e963e4184f09e61841106',
+        repo: 'comments',
+        owner: 'FAuditore',
+        admin: ['FAuditore'],
+        body: decodeURI(location.href)
+      });
+      gitalk.render('gitalk-container');
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://github.com/gitalk/gitalk">comments powered by gitalk.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/FAuditore" class="iconfont icon-github" title="github"></a>
+      <a href="https://space.bilibili.com/1848773" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="https://fauditore.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> site pv: <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> site uv: <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2020 - 
+    2022<span class="heart"><i class="iconfont icon-heart"></i></span><span>刘波</span>
+  </span>
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.c12618f9a600c40bd024996677e951e64d3487006775aeb22e200c990006c5c7.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
