@@ -6,12 +6,12 @@ date: 2026-05-11 16:08:00
 
 ## 对比
 
-| 归一化 | 作用维度 | 可学习参数 | 依赖 batch | 典型用途 |
-|--------|---------|----------|-----------|---------|
-| BatchNorm | B (batch) | $\gamma, \beta$ | 是 | CNN, 视觉任务 |
-| LayerNorm | D (feature) | $\gamma, \beta$ | 否 | Transformer, RNN |
-| RMSNorm | D (feature) | $\gamma$ | 否 | LLaMA, 大语言模型 |
-| QK Norm | d_k (per head) | $\alpha$ | 否 | 大模型注意力稳定 |
+| 归一化 | 作用维度             | 可学习参数 | 依赖 batch | 典型用途 |
+|--------|------------------|----------|-----------|---------|
+| BatchNorm | $B$ (batch)        | $\gamma, \beta$ | 是 | CNN, 视觉任务 |
+| LayerNorm | $D$ (feature)      | $\gamma, \beta$ | 否 | Transformer, RNN |
+| RMSNorm | $D$ (feature)      | $\gamma$ | 否 | 大语言模型 |
+| QK Norm | $d_k$ (per head) | $\alpha$ | 否 | 大模型注意力稳定 |
 
 **选择建议**：现代 LLM 架构普遍采用 **RMSNorm + QK Norm** 的组合，在训练稳定性和推理速度之间取得了良好平衡。
 
@@ -31,7 +31,7 @@ date: 2026-05-11 16:08:00
 
 ## Batch Normalization
 
-对 batch 维度做归一化。给定输入 $x \in \mathbb{R}^{B \times N \times D}$，在 B 和 N 维度求均值和方差（即每个特征维度 $D$ 上，跨 batch 和序列位置做统计）：
+对 batch 维度做归一化。给定输入 $x \in \mathbb{R}^{B \times N \times D}$，在 B 和 N 维度求均值和方差（即跨批次和序列位置统计，每个特征独立归一化）：
 
 $$
 \mu = \frac{1}{B \cdot N} \sum_{b=1}^{B}\sum_{n=1}^{N} x_{b,n}, \quad \sigma^2 = \frac{1}{B \cdot N} \sum_{b=1}^{B}\sum_{n=1}^{N} (x_{b,n} - \mu)^2
@@ -85,10 +85,14 @@ class BatchNorm(nn.Module):
 
 ## Layer Normalization
 
-对特征维度做归一化，不依赖 batch 统计。给定输入 $x \in \mathbb{R}^{B \times N \times D}$，在每个 $(b, n)$ 位置的 D 维度求均值和方差：
+对特征维度做归一化，不依赖 batch 统计。给定输入 $x \in \mathbb{R}^{B \times N \times D}$，在每个 $(b, n)$ 位置求均值和方差：
 
 $$
 \mu_{b,n} = \frac{1}{D} \sum_{d=1}^{D} x_{b,n,d}, \quad \sigma^2_{b,n} = \frac{1}{D} \sum_{d=1}^{D} (x_{b,n,d} - \mu_{b,n})^2
+$$
+
+$$
+\hat{x} = \frac{x - \mu}{\sqrt{\sigma^2 + \epsilon}}, \quad y = \gamma \hat{x} + \beta
 $$
 
 **优点**：
